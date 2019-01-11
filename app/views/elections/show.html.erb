@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Start date:</strong>
+  <%= @election.start_date %>
+</p>
+
+<p>
+  <strong>End date:</strong>
+  <%= @election.end_date %>
+</p>
+
+<p>
+  <strong>Groups:</strong>
+  <%= @election.groups %>
+</p>
+
+<p>
+  <strong>Choices:</strong>
+  <% @choices.each do |choice| %>
+    <%= radio_button_tag "new_vote", choice.name %>
+    <%= choice.name %>
+  <% end %>
+  <%= submit_tag "Voter", class: "btn btn-primary" %>
+</p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @election.title %>
+</p>
+
+<%= link_to 'Edit', edit_election_path(@election) if super_admin_signed_in? %> |
+<%= link_to 'Back', root_path %>

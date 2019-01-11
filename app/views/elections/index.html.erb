@@ -1,0 +1,27 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Elections</h1>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Start date</th>
+      <th>End date</th>
+      <th>Groups</th>
+      <th>Title</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @elections.each do |election| %>
+      <tr>
+        <td><%= election.start_date %></td>
+        <td><%= election.end_date %></td>
+        <td><%= election.groups %></td>
+        <td><%= election.title %></td>
+        <td><%= link_to 'Show', election %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

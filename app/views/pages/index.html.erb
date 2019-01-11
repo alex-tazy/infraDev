@@ -1,0 +1,53 @@
+<h1>Bonjour <%= current_elector.email if elector_signed_in? %></h1>
+
+<%= flash[:notice] %>
+<%= flash[:alert] %>
+
+<p>Aujourd'hui, vous allez voter.</p>
+
+<% if super_admin_signed_in? %>
+    <p>ADMIN MODE</p>
+<% end %>
+
+<p>
+<%=
+link_to_unless(elector_signed_in?, "Login", new_elector_session_path) do
+    link_to('Deconnexion', destroy_elector_session_path, method: :delete)
+end
+%>
+</p>
+
+<p>
+    <% if elector_signed_in? || super_admin_signed_in? %>
+        <% if @elections.nil? %>
+            <p>Il n'y a pas d'élections pour le moment</p>
+        <% else %>
+            <h2>Liste des élections en cours</h2>
+            <table class="table">
+                <thead>
+                    <tr>
+                    <th>Start date</th>
+                    <th>End date</th>
+                    <th>Title</th>
+                    <th colspan="3"></th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <% @elections.each do |election| %>
+                    <tr>
+                        <td><%= election.start_date %></td>
+                        <td><%= election.end_date %></td>
+                        <td><%= election.title %></td>
+                        <td><%= link_to 'Show', election %></td>
+                        <% if super_admin_signed_in? %>
+                        <td><%= link_to 'Edit', edit_election_path(election) %></td>
+                        <td><%= link_to 'Destroy', election, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+                        <% end %>
+                    </tr>
+                    <% end %>
+                </tbody>
+            </table>
+        <% end %>
+    <% end %>
+</p>
